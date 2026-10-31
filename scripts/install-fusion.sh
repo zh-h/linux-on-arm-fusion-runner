@@ -7,6 +7,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/env.sh"
 install_proxy_env
 
+echo "--- registering Autodesk sign-in callback handler ---"
+"$SCRIPT_DIR/install-desktop-handler.sh" || echo "WARNING: could not register adsk:// handler (see above)" >&2
+
 PAYLOAD_DIR="$FUSION_DIR/installer/client-downloader"
 SOURCE_EXE="$FUSION_DIR/imports/Fusion Client Downloader.exe"
 INSTALLER_URL="${FUSION_INSTALLER_URL:-https://dl.appstreaming.autodesk.com/production/installers/Fusion%20Client%20Downloader.exe}"

@@ -63,6 +63,8 @@ Autodesk 登录回调由 `scripts/adskidmgr-direct.sh` 处理：它在同一个 
 
 ### 安装与启动
 
+- `install-fusion.sh` 启动前会自动注册 `adsk://` / `adskidmgr://` 登录回调处理器；
+  也可单独运行 `./scripts/install-desktop-handler.sh` 重新注册。
 - 安装期间流程序窗口（`Autodesk 应用程序流`）会保持打开，并自动启动 Fusion。
   两者运行在同一个 umu 容器中，因此关闭流程序窗口可能同时关闭 Fusion；可用
   `scripts/run-fusion.sh` 重新启动。
