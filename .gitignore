@@ -1,0 +1,19 @@
+# Autodesk installer (proprietary, untracked)
+imports/*.exe
+*.exe
+
+# Downloaded / extracted runtime, recreated by the setup scripts
+fex/
+proton/
+umu/
+umu-data/
+installer/
+icons/
+cache/
+logs/
+
+# Wine prefix: contains credentials and application data
+prefix/
+
+# Local artifacts
+*.log
