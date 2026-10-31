@@ -82,4 +82,4 @@ rm -rf \
   "$FUSION_DIR/logs"
 
 echo "deleted: fex/ proton/ umu/ umu-data/ prefix/ cache/ installer/ icons/ logs/"
-echo "kept: imports/Fusion 360 Client Downloader.exe, scripts/, README.md, .gitignore"
+echo "kept: imports/Fusion Client Downloader.exe, scripts/, README.md, .gitignore"

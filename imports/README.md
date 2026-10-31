@@ -1,11 +1,12 @@
 # imports/
 
-Place Autodesk's Windows installer here:
+`scripts/install-fusion.sh` 会自动把 Autodesk 的 Windows 安装器下载到这里：
 
 ```
-imports/Fusion 360 Client Downloader.exe
+imports/Fusion Client Downloader.exe
 ```
 
-The executable is proprietary and is intentionally ignored by git
-(`imports/*.exe`). The setup scripts never execute its 32-bit SFX shell: they
-extract it with `7z` and run the 64-bit `streamer.exe` inside.
+如自动下载失败，可手动放入同名文件。
+
+安装脚本不会执行它的 32 位 SFX 外壳：用 `7z` 解包后直接运行其中的 64 位
+`streamer.exe`。

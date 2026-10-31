@@ -8,21 +8,30 @@ source "$SCRIPT_DIR/env.sh"
 install_proxy_env
 
 PAYLOAD_DIR="$FUSION_DIR/installer/client-downloader"
-SOURCE_EXE="$FUSION_DIR/imports/Fusion 360 Client Downloader.exe"
-LEGACY_EXE="$FUSION_DIR/Fusion 360 Client Downloader.exe"
-if [[ ! -f "$SOURCE_EXE" && -f "$LEGACY_EXE" ]]; then
-  SOURCE_EXE="$LEGACY_EXE"
-fi
+SOURCE_EXE="$FUSION_DIR/imports/Fusion Client Downloader.exe"
+INSTALLER_URL="${FUSION_INSTALLER_URL:-https://dl.appstreaming.autodesk.com/production/installers/Fusion%20Client%20Downloader.exe}"
 STREAMER_ARGS=(
   -a 73e72ada57b7480280f7a6f4a289729f
   -s production
   -c https://dl.appstreaming.autodesk.com/production/
 )
 
-if [[ ! -f "$SOURCE_EXE" ]]; then
-  echo "ERROR: installer not found: $FUSION_DIR/imports/Fusion 360 Client Downloader.exe" >&2
-  echo "       Put the Autodesk Windows installer there and retry." >&2
-  exit 1
+if [[ ! -s "$SOURCE_EXE" ]]; then
+  echo "--- downloading Autodesk installer ---"
+  echo "    $INSTALLER_URL"
+  mkdir -p "$(dirname "$SOURCE_EXE")"
+  if ! curl -L --fail --retry 5 --connect-timeout 20 -o "$SOURCE_EXE.part" "$INSTALLER_URL"; then
+    rm -f "$SOURCE_EXE.part"
+    echo "ERROR: download failed: $INSTALLER_URL" >&2
+    echo "       Download it manually and place it at: $SOURCE_EXE" >&2
+    exit 1
+  fi
+  if ! file "$SOURCE_EXE.part" | grep -q 'PE32'; then
+    echo "ERROR: downloaded file is not a Windows executable" >&2
+    rm -f "$SOURCE_EXE.part"
+    exit 1
+  fi
+  mv "$SOURCE_EXE.part" "$SOURCE_EXE"
 fi
 
 mkdir -p "$PAYLOAD_DIR"
